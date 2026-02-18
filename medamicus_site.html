@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>МедАмикус — Медицинский копирайтинг</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808; --bg2:#0d0d0d; --bg3:#141414;
+  --neon:#b8ff57; --neon-dim:rgba(184,255,87,0.12);
+  --white:#f0f0f0; --gray:#3a3a3a; --mid:#666;
+  --border:rgba(255,255,255,0.06);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Golos Text',sans-serif;overflow-x:hidden}
+
+/* ── UTILS ── */
+.neon{color:var(--neon);text-shadow:0 0 20px rgba(184,255,87,0.35)}
+.container{max-width:1120px;margin:0 auto;padding:0 40px}
+.tag{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(184,255,87,0.07);border:1px solid rgba(184,255,87,0.2);
+  border-radius:100px;padding:5px 14px;
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--neon);
+}
+.tag-dot{width:5px;height:5px;border-radius:50%;background:var(--neon);box-shadow:0 0 6px var(--neon);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:0 40px;height:68px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(8,8,8,0.85);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-lmark{
+  width:34px;height:34px;border:1.5px solid #333;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  background:#0d0d0d;position:relative;
+}
+.nav-lmark::after{
+  content:'';position:absolute;bottom:-1.5px;left:6px;
+  width:8px;height:2.5px;border-radius:2px;background:var(--neon);
+  box-shadow:0 0 8px var(--neon);
+}
+.nav-lmark span{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;color:var(--white);letter-spacing:-.05em}
+.nav-brand{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;color:var(--white);letter-spacing:-.03em}
+.nav-brand em{font-style:normal;color:var(--neon)}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-size:13px;font-weight:500;color:var(--mid);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{
+  background:var(--neon);color:#080808;border:none;border-radius:10px;
+  padding:9px 20px;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;transition:opacity .2s;letter-spacing:.01em;
+}
+.nav-cta:hover{opacity:.85}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:100px 0 80px;position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(184,255,87,0.06) 0%,transparent 65%);pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;bottom:-200px;left:-100px;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(184,255,87,0.04) 0%,transparent 65%);pointer-events:none;
+}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hero-eyebrow{margin-bottom:24px}
+.hero-h1{
+  font-family:'Unbounded',sans-serif;font-size:clamp(32px,4vw,54px);
+  font-weight:900;line-height:1.08;letter-spacing:-.04em;margin-bottom:24px;
+}
+.hero-sub{
+  font-size:16px;color:var(--mid);line-height:1.65;margin-bottom:40px;max-width:440px;
+}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{
+  background:var(--neon);color:#080808;border:none;border-radius:12px;
+  padding:14px 28px;font-family:'Golos Text',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:opacity .2s;
+}
+.btn-primary:hover{opacity:.85}
+.btn-ghost{
+  background:transparent;color:var(--white);
+  border:1px solid rgba(255,255,255,0.15);border-radius:12px;
+  padding:14px 28px;font-family:'Golos Text',sans-serif;font-size:14px;font-weight:600;
+  cursor:pointer;transition:border-color .2s,color .2s;
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.3)}
+
+/* Hero right — stats card */
+.hero-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:24px;
+  padding:40px;display:flex;flex-direction:column;gap:28px;
+  position:relative;overflow:hidden;
+}
+.hero-card::before{
+  content:'';position:absolute;top:-1px;left:40px;right:40px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--neon),transparent);
+  box-shadow:0 0 12px rgba(184,255,87,.4);
+}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.stat{padding:20px;background:var(--bg3);border-radius:14px;border:1px solid var(--border)}
+.stat-num{font-family:'Unbounded',sans-serif;font-size:30px;font-weight:900;color:var(--neon);letter-spacing:-.03em;margin-bottom:4px}
+.stat-label{font-size:12px;color:var(--mid);font-weight:500;line-height:1.4}
+.hero-promise{
+  border-left:2px solid rgba(184,255,87,.35);padding-left:14px;
+  font-size:13px;color:#555;line-height:1.6;
+}
+
+/* ── SECTION ── */
+section{padding:100px 0}
+.s-header{margin-bottom:64px}
+.s-label{margin-bottom:16px}
+.s-title{font-family:'Unbounded',sans-serif;font-size:clamp(26px,3vw,40px);font-weight:700;letter-spacing:-.03em;line-height:1.15;margin-bottom:16px}
+.s-desc{font-size:15px;color:var(--mid);line-height:1.65;max-width:560px}
+
+/* ── WHY US — 5 cards ── */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.why-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:18px;
+  padding:28px;transition:border-color .2s,transform .2s;cursor:default;
+}
+.why-card:hover{border-color:rgba(184,255,87,.2);transform:translateY(-3px)}
+.why-num{
+  font-family:'Unbounded',sans-serif;font-size:11px;font-weight:600;
+  color:rgba(184,255,87,.4);letter-spacing:.12em;margin-bottom:14px;
+}
+.why-title{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;letter-spacing:-.02em;margin-bottom:10px;line-height:1.25}
+.why-text{font-size:13px;color:var(--mid);line-height:1.6}
+.why-card:first-child,.why-card:nth-child(2){grid-column:span 1}
+.why-card-big{grid-column:span 1}
+.why-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:rgba(184,255,87,0.08);border:1px solid rgba(184,255,87,0.15);
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+}
+.why-icon svg{width:18px;height:18px}
+
+/* ── TEAM ── */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.team-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:18px;
+  padding:28px;transition:border-color .2s;
+}
+.team-card:hover{border-color:rgba(184,255,87,.15)}
+.team-avatar{
+  width:56px;height:56px;border-radius:14px;
+  background:linear-gradient(135deg,#1a2a1a,#0d1a0d);
+  border:1px solid rgba(184,255,87,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;color:var(--neon);
+  margin-bottom:16px;
+}
+.team-name{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;letter-spacing:-.02em;margin-bottom:5px}
+.team-role{font-size:12px;color:rgba(184,255,87,.6);font-weight:600;margin-bottom:12px;letter-spacing:.03em}
+.team-bio{font-size:12.5px;color:var(--mid);line-height:1.6}
+
+/* ── PROCESS ── */
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.process-steps::before{
+  content:'';position:absolute;top:26px;left:calc(12.5% + 26px);right:calc(12.5% + 26px);
+  height:1px;background:linear-gradient(90deg,var(--neon),rgba(184,255,87,.2));
+}
+.step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px}
+.step-num{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--bg3);border:1px solid rgba(184,255,87,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;color:var(--neon);
+  margin-bottom:16px;position:relative;z-index:1;
+  box-shadow:0 0 20px rgba(184,255,87,.1);
+}
+.step-title{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;line-height:1.25}
+.step-text{font-size:12px;color:var(--mid);line-height:1.55}
+
+
+/* CASES */
+.cases-tabs{display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap}
+.ctab{
+  padding:8px 18px;border-radius:100px;border:1px solid var(--border);
+  background:transparent;color:var(--mid);font-family:'Golos Text',sans-serif;
+  font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.ctab.active,.ctab:hover{background:rgba(184,255,87,.1);border-color:rgba(184,255,87,.3);color:var(--neon)}
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.case-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:18px;
+  overflow:hidden;transition:border-color .2s,transform .2s;cursor:pointer;
+}
+.case-card:hover{border-color:rgba(184,255,87,.2);transform:translateY(-3px)}
+.case-cover{
+  height:160px;display:flex;align-items:center;justify-content:center;
+  font-size:40px;position:relative;overflow:hidden;
+}
+.case-body{padding:20px}
+.case-type{
+  font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(184,255,87,.5);margin-bottom:8px;
+}
+.case-title{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;line-height:1.3}
+.case-desc{font-size:12px;color:var(--mid);line-height:1.55;margin-bottom:14px}
+.case-meta{display:flex;align-items:center;justify-content:space-between}
+.case-client{font-size:11px;color:#3a3a3a;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.case-result{
+  font-size:11px;font-weight:700;color:var(--neon);
+  background:rgba(184,255,87,.07);border:1px solid rgba(184,255,87,.15);
+  border-radius:100px;padding:3px 10px;
+}
+@media(max-width:900px){.cases-grid{grid-template-columns:1fr}}
+/* ── CTA BANNER ── */
+.cta-banner{
+  background:linear-gradient(135deg,#0f1f0a,#0a1505);
+  border:1px solid rgba(184,255,87,.2);border-radius:28px;
+  padding:64px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.cta-banner::before{
+  content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;
+  border-radius:50%;background:radial-gradient(circle,rgba(184,255,87,.15) 0%,transparent 65%);
+}
+.cta-title{font-family:'Unbounded',sans-serif;font-size:clamp(22px,2.5vw,32px);font-weight:700;letter-spacing:-.03em;margin-bottom:12px;line-height:1.2}
+.cta-sub{font-size:14px;color:var(--mid);line-height:1.6}
+.cta-actions{display:flex;flex-direction:column;gap:10px;flex-shrink:0}
+.btn-big{
+  background:var(--neon);color:#080808;border:none;border-radius:12px;
+  padding:16px 32px;font-family:'Golos Text',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;white-space:nowrap;transition:opacity .2s;
+}
+.btn-big:hover{opacity:.85}
+.cta-note{font-size:11px;color:#444;text-align:center}
+
+/* ── CLIENTS ── */
+.clients-row{
+  display:flex;align-items:center;gap:0;flex-wrap:wrap;
+  border:1px solid var(--border);border-radius:18px;overflow:hidden;
+}
+.client-slot{
+  flex:1;min-width:140px;padding:32px 24px;
+  display:flex;align-items:center;justify-content:center;
+  border-right:1px solid var(--border);
+  font-size:13px;font-weight:600;color:#333;letter-spacing:.05em;text-transform:uppercase;
+  transition:color .2s,background .2s;
+}
+.client-slot:last-child{border-right:none}
+.client-slot:hover{color:var(--white);background:rgba(255,255,255,.02)}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);padding:48px 0 32px;
+}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-logo{margin-bottom:16px}
+.footer-desc{font-size:13px;color:#444;line-height:1.65;max-width:260px}
+.footer-col h4{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#333;margin-bottom:16px}
+.footer-col a{display:block;font-size:13px;color:#555;text-decoration:none;margin-bottom:10px;transition:color .2s}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;align-items:center;justify-content:space-between}
+.footer-copy{font-size:12px;color:#333}
+.footer-handle{font-family:'Unbounded',sans-serif;font-size:12px;color:rgba(184,255,87,.5);letter-spacing:-.01em}
+
+/* NLINE */
+.neon-bar{height:1px;background:linear-gradient(90deg,transparent,rgba(184,255,87,.25),transparent);margin:0}
+
+@media(max-width:900px){
+  .hero-grid,.why-grid,.team-grid{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:1fr 1fr;gap:24px}
+  .process-steps::before{display:none}
+  .cta-banner{grid-template-columns:1fr;text-align:center}
+  .cta-actions{align-items:center}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .container{padding:0 20px}
+  section{padding:64px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-lmark"><span>М</span></div>
+    <div class="nav-brand">Мед<em>Амикус</em></div>
+  </a>
+  <div class="nav-links">
+    <a href="#why">О нас</a>
+    <a href="#team">Команда</a>
+    <a href="#process">Как работаем</a>
+    <a href="#clients">Клиенты</a>
+  </div>
+  <button class="nav-cta">Заказать текст</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">
+          <span class="tag"><span class="tag-dot"></span>Медицинский копирайтинг</span>
+        </div>
+        <h1 class="hero-h1">
+          Тексты от врачей,<br>которые <span class="neon">продают</span>
+        </h1>
+        <p class="hero-sub">
+          Увеличиваем доверие и конверсию для эксперта, клиники и медиа.
+        </p>
+        <div class="hero-btns">
+          <button class="btn-primary">Заказать текст</button>
+          <button class="btn-ghost">Обсудить проект</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-num">60%</div>
+            <div class="stat-label">англоязычных источников: PubMed, Cochrane, UpToDate</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">SEO<span style="color:#555;font-size:18px">+</span>AEO</div>
+            <div class="stat-label">оптимизация для ИИ-ответных систем</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">3</div>
+            <div class="stat-label">врача-автора в команде с практическим опытом</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">доказательная медицина, фактчекинг по источникам</div>
+          </div>
+        </div>
+        <div class="hero-promise">
+          Авторы и редакторы с высшим&nbsp;медицинским образованием и врачебной практикой
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="neon-bar"></div>
+
+<!-- WHY -->
+<section id="why">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-label"><span class="tag"><span class="tag-dot"></span>Почему мы</span></div>
+      <h2 class="s-title">Пять причин<br>выбрать <span class="neon">МедАмикус</span></h2>
+      <p class="s-desc">Медицинский копирайтинг — это не просто текст о здоровье. Это экспертиза, которую нельзя симулировать.</p>
+    </div>
+    <div class="why-grid">
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#b8ff57" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="why-num">01</div>
+        <div class="why-title">Пишем экспертно</div>
+        <div class="why-text">Только доказательная медицина, клинические рекомендации и авторитетные журналы. PubMed, Cochrane Library, UpToDate и МЗ РФ.</div>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" stroke="#b8ff57" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="why-num">02</div>
+        <div class="why-title">И при этом — креативно</div>
+        <div class="why-text">Сложные протоколы — в понятные инструкции, исследования — в увлекательные статьи, рекомендации — в живой контент.</div>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#b8ff57" stroke-width="1.6"/><path d="M21 21l-4.35-4.35" stroke="#b8ff57" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="why-num">03</div>
+        <div class="why-title">SEO + AEO оптимизация</div>
+        <div class="why-text">Наши статьи попадают в быстрые ИИ-ответы. Мы используем не только SEO, но и AEO — оптимизацию для ответных систем.</div>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" stroke="#b8ff57" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><line x1="4" y1="22" x2="4" y2="15" stroke="#b8ff57" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <div class="why-num">04</div>
+        <div class="why-title">Нативно интегрируем продукт</div>
+        <div class="why-text">Статья о проблеме, в которой ваш препарат или медицинский товар выглядит её естественным решением.</div>
+      </div>
+
+      <div class="why-card" style="grid-column:span 2">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#b8ff57" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="#b8ff57" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="why-num">05</div>
+        <div class="why-title">Строгий фактчекинг</div>
+        <div class="why-text">К каждому тезису — ссылка на исследование и скрин из научного источника. Никакой воды, pseudoscience или слабых аргументов.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" style="padding-top:0">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-label"><span class="tag"><span class="tag-dot"></span>Команда</span></div>
+      <h2 class="s-title">Врачи, <span class="neon">которые пишут</span></h2>
+      <p class="s-desc">Говорим с коллегами на одном языке. Следим за клиническими рекомендациями. Понимаем реальные боли пациентов.</p>
+    </div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-avatar">К</div>
+        <div class="team-name">Захарова Каролина</div>
+        <div class="team-role">Терапевт · Копирайтер</div>
+        <div class="team-bio">Медицинский автор с практическим опытом в терапии. Пишет доступно о сложном.</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">М</div>
+        <div class="team-name">Арутюнян Мариам</div>
+        <div class="team-role">Кардиолог · Редактор</div>
+        <div class="team-bio">Не пропустит слабые аргументы, pseudoscience, воду и канцелярит. Острый взгляд на детали.</div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar">Е</div>
+        <div class="team-name">Маркина Екатерина</div>
+        <div class="team-role">Медицинский копирайтер</div>
+        <div class="team-bio">Специалист по медицинскому контенту. Работает с SEO, AEO и нативными форматами.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-label"><span class="tag"><span class="tag-dot"></span>Как работаем</span></div>
+      <h2 class="s-title">Начать просто —<br><span class="neon">3 минуты</span> на бриф</h2>
+    </div>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Заполняете бриф</div>
+        <div class="step-text">Короткая форма за 3 минуты. Расскажите о проекте, задаче и аудитории.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Получаете КП</div>
+        <div class="step-text">Примеры наших статей, анализ вашего проекта и список услуг со стоимостью.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Выбираете услугу</div>
+        <div class="step-text">SEO-статьи, посты в соцсети, экспертные материалы, нативные интеграции.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Начинаем!</div>
+        <div class="step-text">Согласуем план, пишем, проходим фактчекинг и сдаём результат.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CASES -->
+<section id="cases" style="padding-top:0">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-label"><span class="tag"><span class="tag-dot"></span>Портфолио</span></div>
+      <h2 class="s-title">Кейсы —<br>результат <span class="neon">в цифрах</span></h2>
+      <p class="s-desc">Медицина, фармацевтика, велнесс и биотех — работаем с разными нишами и форматами.</p>
+    </div>
+    <div class="cases-tabs">
+      <button class="ctab active">Все</button>
+      <button class="ctab">SEO-статьи</button>
+      <button class="ctab">Соцсети</button>
+      <button class="ctab">Нативные тексты</button>
+      <button class="ctab">Фактчекинг</button>
+    </div>
+    <div class="cases-grid">
+
+      <div class="case-card">
+        <div class="case-cover" style="background:linear-gradient(135deg,#0a1f0a,#071405)">
+          <div style="font-family:Unbounded,sans-serif;font-size:13px;font-weight:700;color:rgba(184,255,87,.4);letter-spacing:-.02em;text-align:center;padding:0 20px;line-height:1.4">Можно ли забеременеть<br>во время месячных?</div>
+        </div>
+        <div class="case-body">
+          <div class="case-type">SEO-статья · Женское здоровье</div>
+          <div class="case-title">Разбор распространённого мифа с доказательной базой</div>
+          <div class="case-desc">Статья для медицинского портала. Источники: PubMed, клинические рекомендации. AEO-оптимизация под быстрые ответы.</div>
+          <div class="case-meta">
+            <span class="case-client">Медпортал</span>
+            <span class="case-result">Топ-3 в Google</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-cover" style="background:linear-gradient(135deg,#1a1a0a,#100f05)">
+          <div style="font-family:Unbounded,sans-serif;font-size:13px;font-weight:700;color:rgba(255,200,80,.35);letter-spacing:-.02em;text-align:center;padding:0 20px;line-height:1.4">Должен ли медкопирайтер<br>быть врачом?</div>
+        </div>
+        <div class="case-body">
+          <div class="case-type">Экспертная статья · Блог</div>
+          <div class="case-title">Аргументированный разбор для отраслевого издания</div>
+          <div class="case-desc">Материал о стандартах медицинского копирайтинга. Ссылки на Cochrane Library и журналы UpToDate.</div>
+          <div class="case-meta">
+            <span class="case-client">Skillbox Media</span>
+            <span class="case-result">×3 к охвату</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-cover" style="background:linear-gradient(135deg,#0a0f1f,#050a14)">
+          <div style="font-family:Unbounded,sans-serif;font-size:13px;font-weight:700;color:rgba(100,160,255,.35);letter-spacing:-.02em;text-align:center;padding:0 20px;line-height:1.4">Нативная интеграция<br>препарата в статью</div>
+        </div>
+        <div class="case-body">
+          <div class="case-type">Нативный текст · Фармацевтика</div>
+          <div class="case-title">Продукт как естественное решение медицинской проблемы</div>
+          <div class="case-desc">Статья о дефиците магния, в которой препарат клиента органично появляется как рекомендованное решение.</div>
+          <div class="case-meta">
+            <span class="case-client">Фармкомпания</span>
+            <span class="case-result">+40% конверсия</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-cover" style="background:linear-gradient(135deg,#1a0a0f,#100507)">
+          <div style="font-family:Unbounded,sans-serif;font-size:13px;font-weight:700;color:rgba(255,100,120,.3);letter-spacing:-.02em;text-align:center;padding:0 20px;line-height:1.4">Серия постов<br>для кардиологической клиники</div>
+        </div>
+        <div class="case-body">
+          <div class="case-type">Соцсети · Кардиология</div>
+          <div class="case-title">12 постов об артериальном давлении и рисках для сердца</div>
+          <div class="case-desc">Контент-план на месяц. Доступный язык, доказательная база, вовлекающие форматы: карточки, разборы, мифы.</div>
+          <div class="case-meta">
+            <span class="case-client">Клиника</span>
+            <span class="case-result">×2.5 вовлечённость</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div class="case-cover" style="background:linear-gradient(135deg,#0a1a14,#051009)">
+          <div style="font-family:Unbounded,sans-serif;font-size:13px;font-weight:700;color:rgba(80,220,160,.3);letter-spacing:-.02em;text-align:center;padding:0 20px;line-height:1.4">Фактчекинг<br>велнесс-бренда</div>
+        </div>
+        <div class="case-body">
+          <div class="case-type">Фактчекинг · Велнесс</div>
+          <div class="case-title">Проверка 40 материалов на соответствие доказательной медицине</div>
+          <div class="case-desc">Аудит контента бренда: выявили 18 спорных утверждений, дали ссылки на источники, переписали формулировки.</div>
+          <div class="case-meta">
+            <span class="case-client">Велнесс-бренд</span>
+            <span class="case-result">0 претензий от Роздравнадзора</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-card" style="border-color:rgba(184,255,87,.12)">
+        <div class="case-cover" style="background:linear-gradient(135deg,#111,#0a0a0a);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px">
+          <div style="font-family:Unbounded,sans-serif;font-size:28px;font-weight:900;color:rgba(184,255,87,.15)">+</div>
+          <div style="font-size:12px;color:#2a2a2a;font-weight:600;letter-spacing:.08em;text-transform:uppercase">Ваш проект</div>
+        </div>
+        <div class="case-body">
+          <div class="case-type">Открыты к новым задачам</div>
+          <div class="case-title">Обсудим ваш проект?</div>
+          <div class="case-desc">Расскажите о задаче — получите анализ, примеры похожих работ и стоимость за 24 часа.</div>
+          <div class="case-meta">
+            <span class="case-client"></span>
+            <span class="case-result" style="cursor:pointer">Написать →</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients" style="padding-top:0">
+  <div class="container">
+    <div class="s-header">
+      <div class="s-label"><span class="tag"><span class="tag-dot"></span>Клиенты</span></div>
+      <h2 class="s-title">С нами <span class="neon">сотрудничают</span></h2>
+    </div>
+    <div class="clients-row">
+      <div class="client-slot">Skillbox</div>
+      <div class="client-slot">Медиа</div>
+      <div class="client-slot">Фармацевтика</div>
+      <div class="client-slot">Клиники</div>
+      <div class="client-slot">Велнесс</div>
+      <div class="client-slot">Биотех</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="container">
+    <div class="cta-banner">
+      <div>
+        <h2 class="cta-title">Готовы начать?<br>Заполните бриф — <span class="neon">это бесплатно</span></h2>
+        <p class="cta-sub">Получите примеры статей, анализ проекта и стоимость услуг за один шаг.</p>
+      </div>
+      <div class="cta-actions">
+        <button class="btn-big">Заполнить бриф</button>
+        <div class="cta-note">medamicus@yandex.ru</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <span style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;color:var(--white);letter-spacing:-.03em">Мед<span style="color:var(--neon)">Амикус</span></span>
+        </div>
+        <div class="footer-desc">Медицинский копирайтинг от врачей. Медицина, фармация, велнесс, биотех.</div>
+      </div>
+      <div class="footer-col">
+        <h4>Навигация</h4>
+        <a href="#">О нас</a>
+        <a href="#">Команда</a>
+        <a href="#">Кейсы</a>
+        <a href="#">Блог</a>
+      </div>
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <a href="#">SEO-статьи</a>
+        <a href="#">Соцсети</a>
+        <a href="#">Нативные тексты</a>
+        <a href="#">Фактчекинг</a>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <a href="#">@medamicus_righter</a>
+        <a href="mailto:medamicus@yandex.ru">medamicus@yandex.ru</a>
+        <a href="#">medamicuscopy.tilda.ws</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 MedAmicus</div>
+      <div class="footer-handle">@medamicus_righter</div>
+    </div>
+  </div>
+</footer>
+
+
+<script data-cfasync="false" src="/cdn

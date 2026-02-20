@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eisai — Наука служит жизни</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --slate-900: #0f172a; --slate-950: #020617; --slate-800: #1e293b; --slate-700: #334155;
+      --cyan-400: #22d3ee; --cyan-300: #67e8f9; --cyan-500: #06b6d4; --cyan-600: #0891b2;
+      --blue-400: #60a5fa; --blue-600: #2563eb; --blue-900: #1e3a5f;
+      --purple-500: #a855f7; --purple-600: #9333ea; --pink-600: #db2777;
+      --orange-500: #f97316; --orange-600: #ea580c; --red-600: #dc2626;
+      --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-700: #374151; --gray-800: #1f2937;
+      --green-400: #4ade80; --teal-400: #2dd4bf;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { background: var(--slate-900); color: white; font-family: 'DM Sans', sans-serif; overflow-x: hidden; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+    ul { list-style: none; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; width: 100%; background: rgba(2,6,23,0.95); backdrop-filter: blur(16px); z-index: 50; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .nav-inner { max-width: 1280px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--cyan-400), var(--blue-600)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; font-family: 'DM Serif Display', serif; }
+    .logo-text { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.1; }
+    .logo-pro { color: var(--cyan-400); }
+    .logo-text-group { display: flex; flex-direction: column; }
+    .logo-subtitle { font-size: 10px; font-weight: 500; color: var(--gray-400); letter-spacing: 0.2px; line-height: 1; margin-top: 2px; }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a { color: var(--gray-300); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: white; }
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .icon-btn { padding: 8px; color: var(--gray-300); border-radius: 8px; transition: color 0.2s, background 0.2s; display: flex; align-items: center; justify-content: center; position: relative; }
+    .icon-btn:hover { color: white; background: rgba(255,255,255,0.05); }
+    .notif-dot { position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; }
+    .mobile-menu-btn { display: none; }
+    .mobile-menu { display: none; position: fixed; top: 73px; left: 0; right: 0; background: rgba(2,6,23,0.98); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 24px; z-index: 49; flex-direction: column; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { padding: 12px 16px; color: var(--gray-300); font-size: 15px; font-weight: 500; border-radius: 10px; transition: all 0.2s; }
+    .mobile-menu a:hover { background: rgba(255,255,255,0.05); color: white; }
+
+    /* HERO */
+    .hero { position: relative; min-height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%); overflow: hidden; padding-top: 80px; }
+    .hero-blob-1 { position: absolute; top: 160px; right: 80px; width: 384px; height: 384px; background: rgba(6,182,212,0.1); border-radius: 50%; filter: blur(64px); pointer-events: none; animation: float1 8s ease-in-out infinite; }
+    .hero-blob-2 { position: absolute; bottom: -160px; left: 80px; width: 320px; height: 320px; background: rgba(37,99,235,0.1); border-radius: 50%; filter: blur(64px); pointer-events: none; animation: float2 10s ease-in-out infinite; }
+    @keyframes float1 { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-30px) scale(1.05); } }
+    @keyframes float2 { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(25px) scale(0.97); } }
+    .hero-grid { position: absolute; inset: 0; opacity: 0.04; background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; }
+    .hero-content { position: relative; z-index: 10; max-width: 1152px; margin: 0 auto; padding: 0 24px; min-height: calc(100vh - 80px); display: flex; flex-direction: column; justify-content: center; animation: fadeUp 0.9s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-badge { display: inline-block; padding: 8px 16px; background: rgba(6,182,212,0.15); border: 1px solid rgba(34,211,238,0.4); color: var(--cyan-300); border-radius: 999px; font-size: 13px; font-weight: 600; margin-bottom: 32px; letter-spacing: 0.3px; }
+    .hero-title { font-family: 'DM Serif Display', serif; font-size: clamp(3.5rem, 8vw, 6rem); line-height: 1.05; margin-bottom: 24px; background: linear-gradient(135deg, var(--cyan-400) 0%, var(--blue-400) 50%, var(--cyan-300) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-desc { font-size: clamp(1.1rem, 2.5vw, 1.4rem); color: var(--gray-300); max-width: 700px; font-weight: 300; margin-bottom: 48px; line-height: 1.7; }
+    .hero-cta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 520px; margin-bottom: 64px; }
+    .cta-btn { padding: 16px 28px; border-radius: 14px; font-weight: 700; font-size: 16px; display: flex; align-items: center; gap: 12px; transition: transform 0.2s, box-shadow 0.3s; color: white; }
+    .cta-btn:hover { transform: translateY(-2px); }
+    .cta-neurology { background: linear-gradient(135deg, #7c3aed, #db2777); }
+    .cta-neurology:hover { box-shadow: 0 20px 40px rgba(124,58,237,0.4); }
+    .cta-oncology { background: linear-gradient(135deg, var(--orange-600), var(--red-600)); }
+    .cta-oncology:hover { box-shadow: 0 20px 40px rgba(234,88,12,0.4); }
+    .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 500px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.15); }
+    .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.5rem; color: var(--cyan-400); line-height: 1; margin-bottom: 4px; }
+    .stat-label { color: var(--gray-400); font-size: 13px; font-weight: 500; }
+
+    /* SHARED */
+    .section-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px; color: white; line-height: 1.1; }
+    .section-sub { font-size: 1.1rem; color: var(--gray-300); font-weight: 300; }
+
+    /* SPECIALTIES */
+    .specialties { padding: 96px 0; background: rgba(30,41,59,0.5); }
+    .specialty-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px; }
+    .specialty-card { cursor: pointer; border-radius: 20px; overflow: hidden; transition: all 0.3s; }
+    .specialty-card:hover { transform: translateY(-4px); }
+    .specialty-card.active-neuro { box-shadow: 0 0 0 2px #a855f7, 0 25px 50px rgba(168,85,247,0.2); }
+    .specialty-card.active-onco { box-shadow: 0 0 0 2px var(--orange-500), 0 25px 50px rgba(249,115,22,0.2); }
+    .specialty-inner { padding: 40px; height: 100%; border: 1px solid; border-radius: 20px; transition: border-color 0.3s; }
+    .specialty-inner.neuro { background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(219,39,119,0.15)); border-color: rgba(168,85,247,0.3); }
+    .specialty-inner.neuro:hover { border-color: rgba(168,85,247,0.6); }
+    .specialty-inner.onco { background: linear-gradient(135deg, rgba(234,88,12,0.15), rgba(220,38,38,0.15)); border-color: rgba(249,115,22,0.3); }
+    .specialty-inner.onco:hover { border-color: rgba(249,115,22,0.6); }
+    .spec-icon { width: 64px; height: 64px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+    .spec-icon.neuro { background: linear-gradient(135deg, #a855f7, #db2777); }
+    .spec-icon.onco { background: linear-gradient(135deg, #f97316, #dc2626); }
+    .spec-title { font-family: 'DM Serif Display', serif; font-size: 2rem; color: white; margin-bottom: 16px; }
+    .spec-desc { color: var(--gray-300); margin-bottom: 20px; line-height: 1.7; font-weight: 300; }
+    .spec-list { margin-bottom: 20px; }
+    .spec-list li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--gray-400); padding: 5px 0; }
+    .spec-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .spec-dot.neuro { background: #a855f7; }
+    .spec-dot.onco { background: #f97316; }
+
+    .onco-topics { margin-bottom: 24px; }
+    .onco-topics-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-400); margin-bottom: 10px; }
+    .onco-topics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .onco-topic-tag { padding: 8px 12px; border-radius: 10px; font-size: 12px; font-weight: 600; line-height: 1.3; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.25); color: #fdba74; cursor: pointer; transition: all 0.2s; }
+    .onco-topic-tag:hover { background: rgba(249,115,22,0.22); border-color: rgba(249,115,22,0.5); color: white; }
+
+    .spec-btn { width: 100%; padding: 14px 20px; border-radius: 12px; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; color: white; }
+    .spec-btn.neuro { background: #9333ea; }
+    .spec-btn.neuro:hover { background: #7c3aed; }
+    .spec-btn.onco { background: var(--orange-600); }
+    .spec-btn.onco:hover { background: #c2410c; }
+    .spec-btn svg { transition: transform 0.2s; }
+    .spec-btn:hover svg { transform: translateX(4px); }
+
+    /* FOR DOCTORS */
+    .for-doctors { padding: 96px 0; background: var(--slate-900); }
+    .doctors-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .doctor-card { border-radius: 18px; padding: 32px; border: 1px solid rgba(255,255,255,0.08); background: rgba(30,41,59,0.4); transition: all 0.3s; position: relative; overflow: hidden; }
+    .doctor-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 18px 18px 0 0; }
+    .doctor-card.dc-blue::before { background: linear-gradient(90deg, var(--cyan-400), var(--blue-400)); }
+    .doctor-card.dc-purple::before { background: linear-gradient(90deg, #a855f7, #db2777); }
+    .doctor-card.dc-orange::before { background: linear-gradient(90deg, var(--orange-500), #f43f5e); }
+    .doctor-card.dc-teal::before { background: linear-gradient(90deg, var(--teal-400), var(--cyan-400)); }
+    .doctor-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .doctor-card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+    .dc-blue .doctor-card-icon { background: rgba(34,211,238,0.15); color: var(--cyan-400); }
+    .dc-purple .doctor-card-icon { background: rgba(168,85,247,0.15); color: #c084fc; }
+    .dc-orange .doctor-card-icon { background: rgba(249,115,22,0.15); color: #fb923c; }
+    .dc-teal .doctor-card-icon { background: rgba(45,212,191,0.15); color: var(--teal-400); }
+    .doctor-card h3 { font-weight: 700; font-size: 17px; color: white; margin-bottom: 10px; }
+    .doctor-card p { font-size: 14px; color: var(--gray-400); line-height: 1.6; margin-bottom: 20px; }
+    .doctor-card-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; transition: gap 0.2s; }
+    .dc-blue .doctor-card-link { color: var(--cyan-400); }
+    .dc-purple .doctor-card-link { color: #c084fc; }
+    .dc-orange .doctor-card-link { color: #fb923c; }
+    .dc-teal .doctor-card-link { color: var(--teal-400); }
+    .doctor-card-link:hover { gap: 10px; }
+
+    /* FEATURES */
+    .features { padding: 96px 0; background: rgba(15,23,42,0.8); }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .feature-card { background: rgba(30,41,59,0.5); border: 1px solid var(--slate-700); border-radius: 16px; padding: 24px; transition: all 0.3s; }
+    .feature-card:hover { border-color: rgba(6,182,212,0.5); box-shadow: 0 8px 30px rgba(6,182,212,0.08); transform: translateY(-2px); }
+    .feature-icon { width: 48px; height: 48px; background: rgba(6,182,212,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; transition: background 0.2s; color: var(--cyan-400); }
+    .feature-card:hover .feature-icon { background: rgba(6,182,212,0.25); }
+    .feature-title { font-weight: 700; color: white; margin-bottom: 8px; font-size: 15px; }
+    .feature-desc { color: var(--gray-400); font-size: 13px; margin-bottom: 16px; line-height: 1.5; }
+    .feature-count { color: var(--cyan-400); font-weight: 600; font-size: 13px; }
+    .feature-card.patient-card { background: rgba(74,222,128,0.05); border-color: rgba(74,222,128,0.2); }
+    .feature-card.patient-card:hover { border-color: rgba(74,222,128,0.5); box-shadow: 0 8px 30px rgba(74,222,128,0.08); }
+    .feature-card.patient-card .feature-icon { background: rgba(74,222,128,0.15); color: var(--green-400); }
+    .feature-card.patient-card:hover .feature-icon { background: rgba(74,222,128,0.25); }
+    .feature-card.patient-card .feature-count { color: var(--green-400); }
+
+    /* NEWS & EVENTS */
+    .news-events { padding: 96px 0; background: rgba(30,41,59,0.4); }
+    .news-tabs { display: flex; gap: 4px; background: rgba(15,23,42,0.6); border-radius: 14px; padding: 4px; width: fit-content; margin-bottom: 40px; }
+    .news-tab { padding: 10px 28px; border-radius: 10px; font-weight: 600; font-size: 14px; transition: all 0.25s; color: var(--gray-400); }
+    .news-tab.active { background: white; color: var(--slate-900); }
+    .news-tab:not(.active):hover { color: white; background: rgba(255,255,255,0.05); }
+    .news-panel { display: none; }
+    .news-panel.active { display: block; }
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .news-card { background: rgba(15,23,42,0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px; transition: all 0.3s; cursor: pointer; }
+    .news-card:hover { border-color: rgba(34,211,238,0.3); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+    .news-card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .news-type-badge { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .badge-conference { background: rgba(34,211,238,0.15); color: var(--cyan-300); }
+    .badge-webinar { background: rgba(168,85,247,0.15); color: #c084fc; }
+    .badge-publication { background: rgba(249,115,22,0.15); color: #fb923c; }
+    .badge-news { background: rgba(74,222,128,0.15); color: var(--green-400); }
+    .badge-symposium { background: rgba(96,165,250,0.15); color: var(--blue-400); }
+    .news-date { font-size: 12px; color: var(--gray-400); }
+    .news-card h3 { font-size: 16px; font-weight: 700; color: white; margin-bottom: 10px; line-height: 1.4; }
+    .news-card p { font-size: 13px; color: var(--gray-400); line-height: 1.6; margin-bottom: 16px; }
+    .news-card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .news-specialty-tag { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 6px; }
+    .ns-neuro { background: rgba(168,85,247,0.15); color: #c084fc; }
+    .ns-onco { background: rgba(249,115,22,0.15); color: #fb923c; }
+    .ns-both { background: rgba(34,211,238,0.15); color: var(--cyan-300); }
+    .news-card-btn { font-size: 13px; font-weight: 600; color: var(--cyan-400); display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s, gap 0.2s; }
+    .news-card-btn:hover { color: var(--cyan-300); gap: 8px; }
+
+    .events-list { display: flex; flex-direction: column; gap: 12px; }
+    .event-card { background: rgba(15,23,42,0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; overflow: hidden; transition: all 0.3s; cursor: pointer; display: flex; }
+    .event-card:hover { border-color: rgba(34,211,238,0.3); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+    .event-date-block { min-width: 80px; padding: 24px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; flex-shrink: 0; }
+    .edb-neuro { background: linear-gradient(180deg, rgba(124,58,237,0.3), rgba(219,39,119,0.2)); }
+    .edb-onco { background: linear-gradient(180deg, rgba(234,88,12,0.3), rgba(220,38,38,0.2)); }
+    .edb-both { background: linear-gradient(180deg, rgba(6,182,212,0.3), rgba(37,99,235,0.2)); }
+    .event-day { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; color: white; }
+    .event-month { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-400); margin-top: 2px; }
+    .event-body { padding: 20px 24px; flex: 1; }
+    .event-body-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+    .event-body h3 { font-size: 15px; font-weight: 700; color: white; margin-bottom: 6px; line-height: 1.4; }
+    .event-body p { font-size: 13px; color: var(--gray-400); margin-bottom: 12px; }
+    .event-location { font-size: 12px; color: var(--gray-400); display: flex; align-items: center; gap: 5px; }
+
+    /* MATERIALS */
+    .materials { padding: 96px 0; background: rgba(15,23,42,0.5); }
+    .materials-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; flex-wrap: wrap; gap: 16px; }
+    .materials-header h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.5rem); color: white; margin-bottom: 8px; }
+    .materials-header p { color: var(--gray-400); }
+    .view-all-btn { color: var(--cyan-400); font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 15px; transition: color 0.2s; white-space: nowrap; }
+    .view-all-btn:hover { color: var(--cyan-300); }
+    .materials-list { display: flex; flex-direction: column; gap: 16px; }
+    .material-card { border: 1px solid var(--slate-700); border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.3s; }
+    .material-card.bg-neuro { background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(219,39,119,0.12)); }
+    .material-card.bg-onco { background: linear-gradient(135deg, rgba(234,88,12,0.12), rgba(220,38,38,0.12)); }
+    .material-card.bg-both { background: linear-gradient(135deg, rgba(6,182,212,0.12), rgba(37,99,235,0.12)); }
+    .material-card:hover { border-color: rgba(6,182,212,0.4); box-shadow: 0 8px 30px rgba(6,182,212,0.07); }
+    .material-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .material-tags { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .tag { font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 999px; }
+    .tag-neuro { background: rgba(168,85,247,0.2); color: #d8b4fe; }
+    .tag-onco { background: rgba(249,115,22,0.2); color: #fdba74; }
+    .tag-both { background: rgba(6,182,212,0.2); color: var(--cyan-300); }
+    .tag-type { font-size: 12px; font-weight: 600; padding: 4px 12px; background: rgba(55,65,81,0.8); color: var(--gray-300); border-radius: 6px; }
+    .save-btn { padding: 8px; border-radius: 8px; transition: all 0.2s; color: var(--gray-400); display: flex; }
+    .save-btn:hover { color: var(--cyan-300); background: rgba(6,182,212,0.1); }
+    .save-btn.saved { color: var(--cyan-300); background: rgba(6,182,212,0.2); }
+    .material-title { font-size: 17px; font-weight: 700; color: white; margin-bottom: 16px; line-height: 1.4; transition: color 0.2s; }
+    .material-card:hover .material-title { color: var(--cyan-300); }
+    .material-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .material-meta { display: flex; align-items: center; gap: 16px; color: var(--gray-400); font-size: 13px; }
+    .read-btn { color: var(--cyan-400); font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 4px; transition: color 0.2s; }
+    .read-btn:hover { color: var(--cyan-300); }
+    .read-btn svg { transition: transform 0.2s; }
+    .read-btn:hover svg { transform: translateX(4px); }
+
+    /* CTA */
+    .cta-section { padding: 80px 0; background: linear-gradient(135deg, var(--cyan-600), var(--blue-600)); position: relative; overflow: hidden; }
+    .cta-dots { position: absolute; inset: 0; opacity: 0.08; background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 24px 24px; }
+    .cta-content { position: relative; z-index: 10; max-width: 700px; margin: 0 auto; text-align: center; padding: 0 24px; }
+    .cta-title { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 24px; line-height: 1.15; }
+    .cta-desc { font-size: 1.1rem; color: rgba(255,255,255,0.9); margin-bottom: 40px; font-weight: 300; }
+    .cta-btns { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+    .cta-primary { padding: 16px 32px; background: white; color: var(--cyan-600); font-weight: 700; border-radius: 12px; font-size: 15px; transition: background 0.2s, transform 0.2s; }
+    .cta-primary:hover { background: #f1f5f9; transform: translateY(-2px); }
+    .cta-secondary { padding: 16px 32px; border: 2px solid white; color: white; font-weight: 700; border-radius: 12px; font-size: 15px; transition: background 0.2s, transform 0.2s; }
+    .cta-secondary:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+    /* FOOTER */
+    footer { background: var(--slate-950); border-top: 1px solid rgba(255,255,255,0.08); padding: 64px 0 0; }
+    .footer-grid { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 48px; margin-bottom: 48px; }
+    .footer-brand p { font-size: 13px; color: var(--gray-400); margin-top: 16px; line-height: 1.6; }
+    .footer-col h4 { font-weight: 700; color: white; margin-bottom: 16px; font-size: 14px; letter-spacing: 0.5px; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { font-size: 13px; color: var(--gray-400); transition: color 0.2s; }
+    .footer-col a:hover { color: white; }
+    .footer-bottom { max-width: 1280px; margin: 0 auto; padding: 24px 24px 32px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p, .footer-bottom a { font-size: 13px; color: var(--gray-400); transition: color 0.2s; }
+    .footer-bottom a:hover { color: white; }
+    .footer-socials { display: flex; gap: 20px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) { .footer-grid { grid-template-columns: repeat(3, 1fr); } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 900px) { .nav-links { display: none; } .mobile-menu-btn { display: flex; } }
+    @media (max-width: 600px) {
+      .hero-cta-grid { max-width: 100%; }
+      .hero-stats { gap: 16px; } .stat-num { font-size: 2rem; }
+      .specialty-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .onco-topics-grid { grid-template-columns: 1fr; }
+      .event-card { flex-direction: column; }
+      .event-date-block { flex-direction: row; gap: 8px; padding: 16px; min-width: unset; }
+    }
+
+    /* ===== BRAND SHOWCASE ===== */
+    .brand-showcase {
+      padding: 120px 0;
+      background: var(--slate-950);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-showcase::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .brand-showcase::after {
+      content: '';
+      position: absolute;
+      bottom: -200px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .brand-showcase-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Left column */
+    .brand-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .brand-eyebrow-line {
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan-400), transparent);
+    }
+
+    .brand-eyebrow-text {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--cyan-400);
+    }
+
+    .brand-wordmark {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(5rem, 10vw, 9rem);
+      line-height: 0.9;
+      margin-bottom: 28px;
+      letter-spacing: -4px;
+    }
+
+    .brand-e {
+      background: linear-gradient(135deg, var(--cyan-400) 0%, var(--blue-400) 60%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .brand-isai {
+      color: white;
+    }
+
+    .brand-tagline {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--gray-300);
+      margin-bottom: 24px;
+      line-height: 1.5;
+      font-style: normal;
+    }
+
+    .brand-tagline em {
+      color: var(--cyan-400);
+      font-style: italic;
+    }
+
+    .brand-desc {
+      font-size: 15px;
+      color: var(--gray-400);
+      line-height: 1.8;
+      margin-bottom: 40px;
+      font-weight: 300;
+      max-width: 480px;
+    }
+
+    .brand-facts {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .brand-fact {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .brand-fact-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      color: white;
+      line-height: 1;
+    }
+
+    .brand-fact-label {
+      font-size: 12px;
+      color: var(--gray-400);
+      font-weight: 500;
+    }
+
+    .brand-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border: 1.5px solid rgba(34,211,238,0.4);
+      border-radius: 12px;
+      color: var(--cyan-300);
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s;
+      background: rgba(6,182,212,0.06);
+    }
+
+    .brand-cta-btn:hover {
+      border-color: var(--cyan-400);
+      background: rgba(6,182,212,0.12);
+      transform: translateY(-2px);
+    }
+
+    .brand-cta-btn svg { transition: transform 0.2s; }
+    .brand-cta-btn:hover svg { transform: translateX(4px); }
+
+    /* Media / Video */
+    .brand-media {
+      position: relative;
+    }
+
+    .brand-media-frame {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(34,211,238,0.08);
+    }
+
+    .brand-media-placeholder {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, #0a1628 0%, #0c2040 40%, #0f2a50 70%, #0a1628 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    /* Subtle grid inside placeholder */
+    .brand-media-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(34,211,238,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,211,238,0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    .brand-media-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(6,182,212,0.08) 0%, transparent 70%);
+    }
+
+    .brand-play-btn {
+      position: relative;
+      z-index: 2;
+      width: 80px; height: 80px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      transition: all 0.3s;
+      backdrop-filter: blur(8px);
+      margin-bottom: 32px;
+    }
+
+    .brand-play-btn:hover {
+      background: rgba(6,182,212,0.3);
+      border-color: var(--cyan-400);
+      transform: scale(1.1);
+      box-shadow: 0 0 40px rgba(6,182,212,0.4);
+    }
+
+    .brand-play-ring {
+      position: absolute;
+      inset: -12px;
+      border: 1px solid rgba(34,211,238,0.25);
+      border-radius: 50%;
+      animation: pulse-ring 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.12); opacity: 0.1; }
+    }
+
+    .brand-media-caption {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .brand-media-label {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 999px;
+      background: rgba(34,211,238,0.15);
+      border: 1px solid rgba(34,211,238,0.3);
+      color: var(--cyan-300);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .brand-media-subtitle {
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+      font-weight: 300;
+    }
+
+    /* Corner accents */
+    .corner-tl, .corner-br {
+      position: absolute;
+      width: 32px; height: 32px;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .corner-tl {
+      top: 12px; left: 12px;
+      border-top: 2px solid var(--cyan-400);
+      border-left: 2px solid var(--cyan-400);
+      border-radius: 4px 0 0 0;
+    }
+
+    .corner-br {
+      bottom: 12px; right: 12px;
+      border-bottom: 2px solid var(--cyan-400);
+      border-right: 2px solid var(--cyan-400);
+      border-radius: 0 0 4px 0;
+    }
+
+    /* Floating badge */
+    .brand-float-badge {
+      position: absolute;
+      bottom: -24px;
+      left: -24px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      z-index: 4;
+    }
+
+    .brand-float-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(37,99,235,0.2));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan-400);
+      flex-shrink: 0;
+    }
+
+    .brand-float-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: white;
+    }
+
+    .brand-float-sub {
+      font-size: 12px;
+      color: var(--gray-400);
+    }
+
+    @media (max-width: 900px) {
+      .brand-showcase-inner {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+      .brand-wordmark { font-size: clamp(4rem, 15vw, 6rem); }
+      .brand-float-badge { left: 12px; bottom: -16px; }
+      .brand-media { padding-bottom: 32px; }
+    }
+
+    @media (max-width: 600px) {
+      .brand-facts { gap: 24px; }
+      .brand-fact-num { font-size: 1.4rem; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="logo-icon">E</div>
+      <div class="logo-text-group">
+        <span class="logo-text">Eisai<span class="logo-pro">.pro</span></span>
+        <span class="logo-subtitle">для специалистов здравоохранения</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#">Компания</a>
+      <a href="#">Неврология</a>
+      <a href="#">Онкология</a>
+      <a href="#">Новости</a>
+      <a href="#">О портале</a>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="Поиск">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Уведомления">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <span class="notif-dot"></span>
+      </button>
+      <button class="icon-btn" aria-label="Профиль">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+      </button>
+      <button class="icon-btn mobile-menu-btn" id="menuToggle" aria-label="Меню">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#">Компания</a><a href="#">Неврология</a><a href="#">Онкология</a>
+  <a href="#">Новости</a><a href="#">О портале</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-blob-1"></div>
+  <div class="hero-blob-2"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <span class="hero-badge">Eisai.pro — для специалистов здравоохранения</span>
+    <h1 class="hero-title">Наука служит жизни</h1>
+    <p class="hero-desc">Экосистема научных материалов, клинических данных и образовательного контента для специалистов здравоохранения. Два направления. Один фокус — инновационное лечение.</p>
+    <div class="hero-cta-grid">
+      <button class="cta-btn cta-neurology">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+        Неврология
+      </button>
+      <button class="cta-btn cta-oncology">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6l9 13 9-13-3-4Z"/><path d="M11 2 8 6l4 7 4-7-3-4Z"/><path d="m3 6 9 13 9-13"/></svg>
+        Онкология
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND SHOWCASE -->
+<section class="brand-showcase">
+  <div class="brand-showcase-inner">
+
+    <!-- Left: Eisai wordmark & tagline -->
+    <div class="brand-left">
+      <div class="brand-eyebrow">
+        <span class="brand-eyebrow-line"></span>
+        <span class="brand-eyebrow-text">Эйсай в России</span>
+      </div>
+
+      <div class="brand-wordmark">
+        <span class="brand-e">Э</span><span class="brand-isai">йсай</span>
+      </div>
+
+      <p class="brand-tagline">
+        С 2013 года — рядом<br />с российскими пациентами
+      </p>
+
+      <p class="brand-desc">
+        Российское подразделение Эйсай обеспечивает доступность инновационных препаратов в онкологии и неврологии, проводит клинические исследования и поддерживает образовательные программы для врачей и пациентов. Входим в регион EMEA со штаб-квартирой в Великобритании.
+      </p>
+
+      <div class="brand-facts">
+        <div class="brand-fact">
+          <span class="brand-fact-num">2013</span>
+          <span class="brand-fact-label">Открытие офиса</span>
+        </div>
+        <div class="brand-fact">
+          <span class="brand-fact-num">100+</span>
+          <span class="brand-fact-label">Сотрудников в РФ</span>
+        </div>
+        <div class="brand-fact">
+          <span class="brand-fact-num">40+</span>
+          <span class="brand-fact-label">Филиалов в мире</span>
+        </div>
+      </div>
+
+      <button class="brand-cta-btn">
+        Узнать больше об Эйсай Россия
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <!-- Right: video/image placeholder -->
+    <div class="brand-media">
+      <div class="brand-media-frame">
+        <!-- Replace src with a real image or add a <video> tag -->
+        <div class="brand-media-placeholder">
+          <div class="brand-media-overlay"></div>
+
+          <!-- Play button (if using as video) -->
+          <button class="brand-play-btn" aria-label="Смотреть видео">
+            <div class="brand-play-ring"></div>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+
+          <div class="brand-media-caption">
+            <span class="brand-media-label">Корпоративное видео</span>
+            <p class="brand-media-subtitle">Миссия и ценности Eisai</p>
+          </div>
+        </div>
+
+        <!-- Decorative corner accents -->
+        <div class="corner-tl"></div>
+        <div class="corner-br"></div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- SPECIALTIES -->
+<section class="specialties">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">Неврология и онкология</h2>
+      <p class="section-sub">Глубокая экспертиза в двух ключевых терапевтических областях</p>
+    </div>
+    <div class="specialty-grid">
+      <!-- Neurology -->
+      <div class="specialty-card active-neuro" id="cardNeuro" onclick="toggleSpecialty('neuro')">
+        <div class="specialty-inner neuro">
+          <div class="spec-icon neuro">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+          </div>
+          <h3 class="spec-title">Неврология</h3>
+          <p class="spec-desc">Эпилепсия, болезнь Альцгеймера, нейровоспалительные заболевания. Инновационные подходы к лечению нервной системы.</p>
+          <ul class="spec-list">
+            <li><span class="spec-dot neuro"></span>12+ препаратов</li>
+            <li><span class="spec-dot neuro"></span>150+ научных материалов</li>
+            <li><span class="spec-dot neuro"></span>8+ вебинаров в месяц</li>
+          </ul>
+          <button class="spec-btn neuro">Перейти в Неврологию <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+      </div>
+      <!-- Oncology -->
+      <div class="specialty-card" id="cardOnco" onclick="toggleSpecialty('onco')">
+        <div class="specialty-inner onco">
+          <div class="spec-icon onco">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6l9 13 9-13-3-4Z"/><path d="M11 2 8 6l4 7 4-7-3-4Z"/><path d="m3 6 9 13 9-13"/></svg>
+          </div>
+          <h3 class="spec-title">Онкология</h3>
+          <p class="spec-desc">Инновационная терапия для различных типов рака. Таргетные препараты и прецизионная медицина.</p>
+          <ul class="spec-list">
+            <li><span class="spec-dot onco"></span>8+ препаратов</li>
+            <li><span class="spec-dot onco"></span>120+ научных материалов</li>
+            <li><span class="spec-dot onco"></span>6+ вебинаров в месяц</li>
+          </ul>
+          <div class="onco-topics">
+            <p class="onco-topics-label">Нозологии</p>
+            <div class="onco-topics-grid">
+              <span class="onco-topic-tag">Почечно-клеточный рак</span>
+              <span class="onco-topic-tag">ДРЩЖ</span>
+              <span class="onco-topic-tag">Рак эндометрия</span>
+              <span class="onco-topic-tag">Гепатоцеллюлярный рак</span>
+            </div>
+          </div>
+          <button class="spec-btn onco">Перейти в Онкологию <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS & EVENTS — сразу после специальностей -->
+<section class="news-events">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">Мероприятия и новости</h2>
+      <p class="section-sub">Будьте в курсе актуальных событий в мире медицины и Eisai</p>
+    </div>
+    <div class="news-tabs">
+      <button class="news-tab active" onclick="switchTab('recent', this)">Недавние</button>
+      <button class="news-tab" onclick="switchTab('upcoming', this)">Скоро</button>
+    </div>
+
+    <!-- RECENT -->
+    <div class="news-panel active" id="panel-recent">
+      <div class="news-grid">
+        <div class="news-card">
+          <div class="news-card-meta">
+            <span class="news-type-badge badge-publication">Публикация</span>
+            <span class="news-date">15 февраля 2025</span>
+          </div>
+          <h3>Новые данные о применении ленватиниба при гепатоцеллюлярном раке: обновление REFLECT</h3>
+          <p>Долгосрочные результаты исследования подтверждают устойчивое преимущество выживаемости по сравнению со стандартом терапии.</p>
+          <div class="news-card-footer">
+            <span class="news-specialty-tag ns-onco">Онкология</span>
+            <button class="news-card-btn">Читать <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-card-meta">
+            <span class="news-type-badge badge-news">Новость</span>
+            <span class="news-date">10 февраля 2025</span>
+          </div>
+          <h3>Одобрено новое показание при раке эндометрия: что это значит для практики</h3>
+          <p>Регуляторное одобрение открывает новые возможности для пациентов с распространённым раком эндометрия после прогрессирования на платиновой химиотерапии.</p>
+          <div class="news-card-footer">
+            <span class="news-specialty-tag ns-onco">Онкология</span>
+            <button class="news-card-btn">Читать <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+        </div>
+        <div class="news-card">
+          <div class="news-card-meta">
+            <span class="news-type-badge badge-webinar">Запись вебинара</span>
+            <span class="news-date">5 февраля 2025</span>
+          </div>
+          <h3>Болезнь Альцгеймера 2025: диагностические биомаркеры и ранняя интервенция</h3>
+          <p>Доступна запись вебинара — разбор новых критериев диагностики и алгоритмов маршрутизации пациентов.</p>
+          <div class="news-card-footer">
+            <span class="news-specialty-tag ns-neuro">Неврология</span>
+            <button class="news-card-btn">Смотреть запись <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPCOMING -->
+    <div class="news-panel" id="panel-upcoming">
+      <div class="events-list">
+        <div class="event-card">
+          <div class="event-date-block edb-onco">
+            <div class="event-day">12</div>
+            <div class="event-month">МАР</div>
+          </div>
+          <div class="event-body">
+            <div class="event-body-meta">
+              <span class="news-type-badge badge-webinar">Вебинар</span>
+              <span class="news-specialty-tag ns-onco">Онкология</span>
+            </div>
+            <h3>Почечно-клеточный рак: таргетная терапия и иммунотерапия в 1-й линии</h3>
+            <p>Разбор актуальных данных, выбор оптимальной стратегии лечения, обсуждение клинических случаев.</p>
+            <div class="event-location">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7.05 12.35 7.35 12.65a1 1 0 0 0 1.3 0C12.95 22.35 20 15.4 20 10a8 8 0 0 0-8-8z"/></svg>
+              Онлайн · 17:00 МСК
+            </div>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-date-block edb-neuro">
+            <div class="event-day">20</div>
+            <div class="event-month">МАР</div>
+          </div>
+          <div class="event-body">
+            <div class="event-body-meta">
+              <span class="news-type-badge badge-conference">Конференция</span>
+              <span class="news-specialty-tag ns-neuro">Неврология</span>
+            </div>
+            <h3>Российский конгресс по эпилептологии — совместная сессия Eisai</h3>
+            <p>Симпозиум по современным стандартам антиэпилептической терапии и новым молекулам в разработке.</p>
+            <div class="event-location">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7.05 12.35 7.35 12.65a1 1 0 0 0 1.3 0C12.95 22.35 20 15.4 20 10a8 8 0 0 0-8-8z"/></svg>
+              Москва, Экспоцентр · Зал 3
+            </div>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-date-block edb-both">
+            <div class="event-day">3</div>
+            <div class="event-month">АПР</div>
+          </div>
+          <div class="event-body">
+            <div class="event-body-meta">
+              <span class="news-type-badge badge-symposium">Симпозиум</span>
+              <span class="news-specialty-tag ns-both">Оба направления</span>
+            </div>
+            <h3>ДРЩЖ и рак эндометрия: обновление по ленватинибу — мультидисциплинарный взгляд</h3>
+            <p>Эндокринологи, онкологи и гинекологи обсуждают место комбинированных режимов в клинической практике.</p>
+            <div class="event-location">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5.4 7.05 12.35 7.35 12.65a1 1 0 0 0 1.3 0C12.95 22.35 20 15.4 20 10a8 8 0 0 0-8-8z"/></svg>
+              Онлайн · 16:00 МСК
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM FEATURES -->
+<section class="features">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">Всё необходимое для специалиста в одном месте</h2>
+      <p class="section-sub">Комплексная поддержка на каждом этапе профессиональной деятельности</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <p class="feature-title">Научные материалы</p>
+        <p class="feature-desc">Статьи, мета-анализы, клинические руководства</p>
+        <p class="feature-count">200+</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect width="15" height="14" x="1" y="5" rx="2" ry="2"/></svg></div>
+        <p class="feature-title">Вебинары</p>
+        <p class="feature-desc">Онлайн сеансы с ведущими экспертами</p>
+        <p class="feature-count">14/мес</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6l9 13 9-13-3-4Z"/><path d="M11 2 8 6l4 7 4-7-3-4Z"/><path d="m3 6 9 13 9-13"/></svg></div>
+        <p class="feature-title">Исследования</p>
+        <p class="feature-desc">Клинические данные и результаты испытаний</p>
+        <p class="feature-count">300+</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <p class="feature-title">Сообщество</p>
+        <p class="feature-desc">Обсуждения с коллегами и экспертами</p>
+        <p class="feature-count">50K+</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+        <p class="feature-title">Гайдлайны</p>
+        <p class="feature-desc">Практические рекомендации по лечению</p>
+        <p class="feature-count">45</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></div>
+        <p class="feature-title">Избранное</p>
+        <p class="feature-desc">Сохраняйте материалы для быстрого доступа</p>
+        <p class="feature-count">Личное</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <p class="feature-title">Обучение</p>
+        <p class="feature-desc">Сертификационные программы и курсы</p>
+        <p class="feature-count">20+</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
+        <p class="feature-title">Уведомления</p>
+        <p class="feature-desc">Оставайтесь в курсе новостей и обновлений</p>
+        <p class="feature-count">Custom</p>
+      </div>
+      <!-- 9th: Patient materials -->
+      <div class="feature-card patient-card">
+        <div class="feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <p class="feature-title">Материалы для пациента</p>
+        <p class="feature-desc">Доступные объяснения диагнозов, схем лечения и поддержки — для передачи пациентам</p>
+        <p class="feature-count">80+</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED MATERIALS -->
+<section class="materials">
+  <div class="section-inner">
+    <div class="materials-header">
+      <div>
+        <h2>Избранные материалы</h2>
+        <p>Новейшие исследования и практические рекомендации</p>
+      </div>
+      <button class="view-all-btn">Смотреть всё <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+    <div class="materials-list">
+      <div class="material-card bg-neuro">
+        <div class="material-top">
+          <div class="material-tags"><span class="tag tag-neuro">Неврология</span><span class="tag-type">Статья</span></div>
+          <button class="save-btn" onclick="toggleSave(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+        </div>
+        <h3 class="material-title">Новые стратегии лечения эпилепсии: мультидисциплинарный подход</h3>
+        <div class="material-footer">
+          <div class="material-meta"><span>Вчера</span><span>234 просмотра</span></div>
+          <button class="read-btn">Читать <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+      </div>
+      <div class="material-card bg-onco">
+        <div class="material-top">
+          <div class="material-tags"><span class="tag tag-onco">Онкология</span><span class="tag-type">Исследование</span></div>
+          <button class="save-btn" onclick="toggleSave(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+        </div>
+        <h3 class="material-title">Таргетная терапия в онкологии: результаты III фазы клинических испытаний</h3>
+        <div class="material-footer">
+          <div class="material-meta"><span>2 дня назад</span><span>567 просмотров</span></div>
+          <button class="read-btn">Читать <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+      </div>
+      <div class="material-card bg-neuro">
+        <div class="material-top">
+          <div class="material-tags"><span class="tag tag-neuro">Неврология</span><span class="tag-type">Вебинар</span></div>
+          <button class="save-btn" onclick="toggleSave(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+        </div>
+        <h3 class="material-title">Болезнь Альцгеймера: ранняя диагностика и интервенции</h3>
+        <div class="material-footer">
+          <div class="material-meta"><span>3 дня назад</span><span>891 просмотр</span></div>
+          <button class="read-btn">Читать <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+      </div>
+      <div class="material-card bg-both">
+        <div class="material-top">
+          <div class="material-tags"><span class="tag tag-both">Обе</span><span class="tag-type">Гайдлайн</span></div>
+          <button class="save-btn" onclick="toggleSave(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+        </div>
+        <h3 class="material-title">Управление побочными эффектами: практические рекомендации</h3>
+        <div class="material-footer">
+          <div class="material-meta"><span>1 неделя назад</span><span>1200 просмотров</span></div>
+          <button class="read-btn">Читать <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-dots"></div>
+  <div class="cta-content">
+    <h2 class="cta-title">Присоединяйтесь к профессиональному сообществу</h2>
+    <p class="cta-desc">Более 50 000 врачей доверяют Eisai для своего профессионального развития</p>
+    <div class="cta-btns">
+      <button class="cta-primary">Зарегистрироваться</button>
+      <button class="cta-secondary">Ознакомиться подробнее</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo" style="margin-bottom:0">
+        <div class="logo-icon">E</div>
+        <div class="logo-text-group">
+          <span class="logo-text">Eisai<span class="logo-pro">.pro</span></span>
+          <span class="logo-subtitle">для специалистов здравоохранения</span>
+        </div>
+      </div>
+      <p>Глобальная фармацевтическая компания, инновирующая в лечении неврологических и онкологических заболеваний</p>
+    </div>
+    <div class="footer-col"><h4>Компания</h4><ul><li><a href="#">О нас</a></li><li><a href="#">История</a></li><li><a href="#">Контакты</a></li><li><a href="#">Вакансии</a></li></ul></div>
+    <div class="footer-col"><h4>Направления</h4><ul><li><a href="#">Неврология</a></li><li><a href="#">Онкология</a></li><li><a href="#">Исследования</a></li><li><a href="#">Вебинары</a></li></ul></div>
+    <div class="footer-col"><h4>Ресурсы</h4><ul><li><a href="#">Для врачей</a></li><li><a href="#">Для пациентов</a></li><li><a href="#">Публикации</a></li><li><a href="#">Медиа</a></li></ul></div>
+    <div class="footer-col"><h4>Правовое</h4><ul><li><a href="#">Условия</a></li><li><a href="#">Политика</a></li><li><a href="#">Cookie</a></li><li><a href="#">Доступность</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Eisai. Все права защищены.</p>
+    <div class="footer-socials"><a href="#">Соцсети</a></div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('open'));
+
+  // Specialty toggle
+  function toggleSpecialty(type) {
+    document.getElementById('cardNeuro').className = 'specialty-card';
+    document.getElementById('cardOnco').className = 'specialty-card';
+    document.getElementById(type === 'neuro' ? 'cardNeuro' : 'cardOnco').classList.add(type === 'neuro' ? 'active-neuro' : 'active-onco');
+  }
+
+  // Save material
+  function toggleSave(btn) {
+    btn.classList.toggle('saved');
+    btn.querySelector('svg').setAttribute('fill', btn.classList.contains('saved') ? 'currentColor' : 'none');
+  }
+
+  // News tabs
+  function switchTab(tab, el) {
+    document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.news-panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+  }
+</script>
+</body>
+</html>
